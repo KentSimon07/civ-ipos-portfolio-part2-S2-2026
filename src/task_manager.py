@@ -1,7 +1,7 @@
 from src.task import Task
 from src.file_handler import save_tasks
-from src.file_handler import load_tasks
-from datetime import datetime
+from dateutil import parser
+import re
 
 
 def add_task(tasks, title, description, due_date):
@@ -28,11 +28,16 @@ def add_task(tasks, title, description, due_date):
         print("Error: A task with this title already exists.")
         return False
 
+    # Check that the format still looks like DD-MM-YYYY
+    if not re.fullmatch(r"\d{1,2}-\d{1,2}-\d{4}", due_date):
+        print("Error: Invalid date format. Use DD-MM-YYYY.")
+        return False
+    
     # Validate due date format
     try:
-        datetime.strptime(due_date, "%d-%m-%Y")
+        parser.parse(due_date, dayfirst=True)
     except ValueError:
-        print("Error: Invalid date format. Use DD-MM-YYYY.")
+        print("Error: Invalid date.")
         return False
 
     tasks.append(Task(title, description, due_date))
