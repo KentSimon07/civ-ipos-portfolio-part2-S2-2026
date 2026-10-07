@@ -1,5 +1,6 @@
 from src.task import Task
 from src.file_handler import save_tasks
+from src.file_handler import load_tasks
 from datetime import datetime
 
 

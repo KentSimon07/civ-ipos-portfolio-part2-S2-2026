@@ -1,36 +1,41 @@
-from src.task_manager import add_task, delete_task, list_tasks
-from src.file_handler import load_tasks
+import click
+from task_manager import add_task
+from file_handler import load_tasks
 
+@click.command()
+def cli():
+    """Task Manager CLI."""
 
-def main():
-    tasks = load_tasks()
-    while True:
-        print("\nTask Manager CLI")
-        print("1. Add Task")
-        print("2. Delete Task")
-        print("3. List Tasks")
-        print("4. Exit")
+    click.echo("Task Manager CLI")
 
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            title = input("Title: ")
-            description = input("Description: ")
-            due_date = input("Due Date (DD-MM-YYYY): ")
-            add_task(tasks, title, description, due_date)
-        elif choice == "2":
-            title = input("Title of the task to delete: ")
-            if delete_task(tasks, title):
-                print("Task deleted successfully.")
-            else:
-                print("Task not found.")
-        elif choice == "3":
-            list_tasks(tasks)
-        elif choice == "4":
-            print("Exiting Task Manager.")
-            break
+    choice = click.prompt("Enter your choice")
+
+    if choice == "1":
+        title = click.prompt("Enter task title")
+        description = click.prompt("Enter task description")
+        due_date = click.prompt("Enter due date (DD-MM-YYYY)")
+
+        tasks = load_tasks()
+
+        if add_task(tasks, title, description, due_date):
+            click.echo("Task added succesfully")
         else:
-            print("Invalid choice. Try again.")
+            click.echo("Task was not added")
+            
+
+    elif choice == "2":
+        click.echo("Delete Task")
+
+    elif choice == "3":
+        click.echo("List Task")
+
+    elif choice == "4":
+        click.echo("Exit")
+
+    else:
+        click.echo("Invalid Choice")
 
 
+# Only start the program when main.py is run directly
 if __name__ == "__main__":
-    main()
+    cli()
