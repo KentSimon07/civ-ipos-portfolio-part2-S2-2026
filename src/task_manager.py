@@ -32,7 +32,6 @@ def add_task(tasks, title, description, due_date):
     if not re.fullmatch(r"\d{1,2}-\d{1,2}-\d{4}", due_date):
         print("Error: Invalid date format. Use DD-MM-YYYY.")
         return False
-    
     # Validate due date format
     try:
         parser.parse(due_date, dayfirst=True)
