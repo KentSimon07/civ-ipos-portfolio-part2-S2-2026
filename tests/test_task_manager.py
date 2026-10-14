@@ -1,16 +1,18 @@
+
 import unittest
+import os
+
 from src.task_manager import add_task, delete_task, filter_tasks_by_status
 from src.file_handler import save_tasks, load_tasks
 from src.task import Task
-import os
 
 TEST_FILE = "test_tasks.bin"
 
 
 class TestTaskManager(unittest.TestCase):
     """
-    Unit tests for Task Manager functionalities including adding, deleting, filtering,
-    and persisting tasks to and from a binary file.
+    Unit tests for Task Manager functionalities including adding, deleting,
+    filtering, and persisting tasks to and from a binary file.
     """
 
     def setUp(self):
@@ -20,18 +22,23 @@ class TestTaskManager(unittest.TestCase):
         """
         self.tasks = []
         self.original_file = "tasks.bin"
+
         if os.path.exists(TEST_FILE):
             os.remove(TEST_FILE)
-        os.rename("tasks.bin", TEST_FILE) if os.path.exists("tasks.bin") else None
+
+        if os.path.exists("tasks.bin"):
+            os.rename("tasks.bin", TEST_FILE)
 
     def tearDown(self):
         """
-        Clean up the test environment by removing any test-created binary files
-        and restoring the original task binary file.
+        Clean up the test environment by removing any test-created binary
+        files and restoring the original task binary file.
         """
         if os.path.exists("tasks.bin"):
             os.remove("tasks.bin")
-        os.rename(TEST_FILE, "tasks.bin") if os.path.exists(TEST_FILE) else None
+
+        if os.path.exists(TEST_FILE):
+            os.rename(TEST_FILE, "tasks.bin")
 
     def test_add_task(self):
         """
@@ -54,11 +61,32 @@ class TestTaskManager(unittest.TestCase):
 
     def test_add_invalid_due_date(self):
         """
-        Test adding a task with an invalid due date format.
-        Verify that the function handles invalid input gracefully and returns False.
+        Test that the task manager rejects:
+        1. A date in the wrong format
+        2. A date that does not actually exist
         """
-        result = add_task(self.tasks, "Test Task", "Description", "2024-12-01")
-        self.assertFalse(result)
+
+        # Wrong format
+        result_wrong_format = add_task(
+            self.tasks,
+            "Test Task 1",
+            "Description",
+            "2024-12-01"
+        )
+
+        # Return false
+        self.assertFalse(result_wrong_format)
+
+        # Impossible date
+        result_invalid_date = add_task(
+            self.tasks,
+            "Test Task 1",
+            "Description",
+            "2024-12-01"
+        )
+
+        # Return false
+        self.assertFalse(result_invalid_date)
 
     def test_delete_task(self):
         """
