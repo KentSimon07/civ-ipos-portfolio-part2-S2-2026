@@ -1,6 +1,8 @@
+
 import click
 from task_manager import add_task
 from file_handler import load_tasks
+
 
 @click.command()
 def cli():
@@ -18,10 +20,9 @@ def cli():
         tasks = load_tasks()
 
         if add_task(tasks, title, description, due_date):
-            click.echo("Task added succesfully")
+            click.echo("Task added successfully")
         else:
             click.echo("Task was not added")
-            
 
     elif choice == "2":
         click.echo("Delete Task")
