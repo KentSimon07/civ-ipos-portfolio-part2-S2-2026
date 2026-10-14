@@ -8,3 +8,4 @@ flake8-print
 pydocstyle
 python-dateutil
 click
+coverage
