@@ -1,7 +1,7 @@
 
 import click
-from task_manager import add_task
-from file_handler import load_tasks
+from src.task_manager import add_task
+from src.file_handler import load_tasks
 
 
 @click.command()
