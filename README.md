@@ -293,3 +293,35 @@ When the PR is merged, the Issue will be automatically closed if you included "f
    - Answered knowledge questions with thoughtful insights.
 
 ---
+
+## Reusable Components
+
+### Click
+
+The application uses `Click` to improve the command-line interface.
+
+Click is used for:
+
+- `@click.command()` to create the CLI command
+- `click.prompt()` to receive user input
+- `click.echo()` to display output
+- `CliRunner` to test CLI behaviour
+
+Click provides reusable and tested functionality for command-line applications.
+
+### python-dateutil
+
+The application uses `python-dateutil` to improve due date validation.
+
+`dateutil.parser` is used to parse and validate task due dates.
+
+This reduces the amount of custom date validation code and reuses an existing Python component.
+
+## Running the Application
+
+Activate the virtual environment first.
+
+For Windows Git Bash:
+
+```bash
+source .venv/Scripts/activate
